@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,5 @@ Route::controller(LoginRegisterController::class)->group(function () {
 Route::get('restricted', function () {
     return redirect()->route('dashboard')->withSuccess("Anda berusia lebih dari 18 tahun!");
 })->middleware('checkage');
+
+Route::resource('users', UserController::class);
