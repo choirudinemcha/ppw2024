@@ -16,7 +16,8 @@ class LoginRegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except([
-            'logout', 'dashboard'
+            'logout',
+            'dashboard'
         ]);
     }
 
@@ -49,8 +50,31 @@ class LoginRegisterController extends Controller
             $filenameWithExt = $request->file('photo')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('photo')->getClientOriginalExtension();
-            $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+            // $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+
+            $basename = uniqid() . time();
+            $smallFilename  = "small_{$basename}.{$extension}";
+            $mediumFilename  = "medium_{$basename}.{$extension}";
+            $largeFilename  = "large_{$basename}.{$extension}";
+
+            $filenameSimpan = "{$basename}.{$extension}";
             $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
+
+            $request->file('picture')->storeAs("photos", $smallFilename);
+            $request->file('picture')->storeAs("photos", $mediumFilename);
+            $request->file('picture')->storeAs("photos", $largeFilename);
+
+            // small
+            $smallThumbnailPath = storage_path("app/public/photos/{$smallFilename}");
+            $this->createThumbnail($smallThumbnailPath, 150, 93);
+            //medium
+            $mediumThumbnailPath = storage_path("app/public/photos/{$mediumFilename}");
+            $this->createThumbnail($mediumThumbnailPath, 300, 185);
+            //large
+            $largeThumbnailPath = storage_path("app/public/photos/{$largeFilename}");
+            $this->createThumbnail($largeThumbnailPath, 550, 340);
+        } else {
+            $path = 'noimage.png';
         }
 
         User::create([
