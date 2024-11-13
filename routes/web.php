@@ -38,3 +38,4 @@ Route::resource('users', UserController::class);
 Route::resource('gallery', GalleryController::class);
 
 Route::get('/send-mail', [SendEmailController::class, 'index'])->name('kirim-email');
+Route::post('/post-email', [SendEmailController::class, 'store'])->name('post-email');
