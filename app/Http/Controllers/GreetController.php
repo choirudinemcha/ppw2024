@@ -49,8 +49,18 @@ class GreetController extends Controller
      *          )
      *     ),
      *     @OA\Response(
-     *         response="default",
-     *         description="successful operation"
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent
+     *           (example={
+     *               "success": true,
+     *               "message": "Berhasil mengambil Kategori Berita",
+     *               "data": {
+     *                  "output": "Hallo Jon Doe",
+     *                  "firstname": "John",
+     *                  "lastname": "Doe"
+     *              }
+     *          }),
      *     )
      * )
      */
@@ -66,6 +76,11 @@ class GreetController extends Controller
         if (empty($userData['firstname']) && empty($userData['lastname'])) {
             return new \Exception('Missing data', 404);
         }
-        return 'Halo ' . $userData['firstname'] . ' ' . $userData['lastname'];
+
+        return response()->json(['message' => 'Berhasil memproses masukan user', 'success' => true, 'data' => [
+            'output' => 'Halo ' . $userData['firstname'] . ' ' . $userData['lastname'],
+            'firstname' => $userData['firstname'],
+            'lastname' => $userData['lastname']
+        ]], 200);
     }
 }
