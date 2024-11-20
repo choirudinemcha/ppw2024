@@ -54,7 +54,7 @@ class GreetController extends Controller
      *         @OA\JsonContent
      *           (example={
      *               "success": true,
-     *               "message": "Berhasil mengambil Kategori Berita",
+     *               "message": "Berhasil memproses masukan user",
      *               "data": {
      *                  "output": "Hallo Jon Doe",
      *                  "firstname": "John",
@@ -77,10 +77,14 @@ class GreetController extends Controller
             return new \Exception('Missing data', 404);
         }
 
-        return response()->json(['message' => 'Berhasil memproses masukan user', 'success' => true, 'data' => [
-            'output' => 'Halo ' . $userData['firstname'] . ' ' . $userData['lastname'],
-            'firstname' => $userData['firstname'],
-            'lastname' => $userData['lastname']
-        ]], 200);
+        return response()->json([
+            'message' => 'Berhasil memproses masukan user',
+            'success' => true,
+            'data' => [
+                'output' => 'Halo ' . $userData['firstname'] . ' ' . $userData['lastname'],
+                'firstname' => $userData['firstname'],
+                'lastname' => $userData['lastname']
+            ]
+        ], 200);
     }
 }
