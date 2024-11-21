@@ -15,7 +15,7 @@ class GalleryController extends Controller
         $data = array(
             'id' => "posts",
             'menu' => 'Gallery',
-            'galleries' => Post::where('picture', '!=', '')->whereNotNull('picture')->orderBy('created_at', 'desc')->paginate(30)
+            'galleries' => array()
         );
         return view('gallery.index')->with($data);
     }
