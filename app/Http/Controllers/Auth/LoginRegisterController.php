@@ -61,19 +61,19 @@ class LoginRegisterController extends Controller
             $filenameSimpan = "{$basename}.{$extension}";
             $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
 
-            $request->file('photo')->storeAs("photos", $smallFilename);
-            $request->file('photo')->storeAs("photos", $mediumFilename);
-            $request->file('photo')->storeAs("photos", $largeFilename);
+            // $request->file('photo')->storeAs("photos", $smallFilename);
+            // $request->file('photo')->storeAs("photos", $mediumFilename);
+            // $request->file('photo')->storeAs("photos", $largeFilename);
 
-            // small
-            $smallThumbnailPath = storage_path("app/public/photos/{$smallFilename}");
-            $this->createThumbnail($smallThumbnailPath, 150, 93);
-            //medium
-            $mediumThumbnailPath = storage_path("app/public/photos/{$mediumFilename}");
-            $this->createThumbnail($mediumThumbnailPath, 300, 185);
-            //large
-            $largeThumbnailPath = storage_path("app/public/photos/{$largeFilename}");
-            $this->createThumbnail($largeThumbnailPath, 550, 340);
+            // // small
+            // $smallThumbnailPath = storage_path("app/public/photos/{$smallFilename}");
+            // $this->createThumbnail($smallThumbnailPath, 150, 93);
+            // //medium
+            // $mediumThumbnailPath = storage_path("app/public/photos/{$mediumFilename}");
+            // $this->createThumbnail($mediumThumbnailPath, 300, 185);
+            // //large
+            // $largeThumbnailPath = storage_path("app/public/photos/{$largeFilename}");
+            // $this->createThumbnail($largeThumbnailPath, 550, 340);
         } else {
             $path = 'noimage.png';
         }
@@ -165,11 +165,11 @@ class LoginRegisterController extends Controller
             ->withSuccess('You have logged out successfully!');;
     }
 
-    public function createThumbnail($path, $width, $height)
-    {
-        $img = Image::make($path)->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save($path);
-    }
+    // public function createThumbnail($path, $width, $height)
+    // {
+    //     $img = Image::make($path)->resize($width, $height, function ($constraint) {
+    //         $constraint->aspectRatio();
+    //     });
+    //     $img->save($path);
+    // }
 }
