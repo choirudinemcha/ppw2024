@@ -60,9 +60,9 @@ class LoginRegisterController extends Controller
             $filenameSimpan = "{$basename}.{$extension}";
             $path = $request->file('photo')->storeAs('photos', $filenameSimpan);
 
-            $request->file('picture')->storeAs("photos", $smallFilename);
-            $request->file('picture')->storeAs("photos", $mediumFilename);
-            $request->file('picture')->storeAs("photos", $largeFilename);
+            $request->file('photo')->storeAs("photos", $smallFilename);
+            $request->file('photo')->storeAs("photos", $mediumFilename);
+            $request->file('photo')->storeAs("photos", $largeFilename);
 
             // small
             $smallThumbnailPath = storage_path("app/public/photos/{$smallFilename}");
