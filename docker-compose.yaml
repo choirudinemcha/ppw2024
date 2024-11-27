@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: ppw2024
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: ppw2024
+    container_name: ppw2024-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - ./php/custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
+    networks:
+      - ppw2024
+
+  db:
+    image: mysql:8.0
+    container_name: ppw2024-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - ppw2024
+
+  nginx:
+    image: nginx:alpine
+    container_name: ppw2024-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    networks:
+      - ppw2024
+
+networks:
+  ppw2024:
+    driver: bridge
