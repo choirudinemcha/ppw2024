@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Intervention\Image\Facades\Image;
 
 class LoginRegisterController extends Controller
 {
@@ -162,5 +163,13 @@ class LoginRegisterController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login')
             ->withSuccess('You have logged out successfully!');;
+    }
+
+    public function createThumbnail($path, $width, $height)
+    {
+        $img = Image::make($path)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save($path);
     }
 }
